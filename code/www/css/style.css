@@ -1,0 +1,121 @@
+/* Empty. Add your own CSS if you like */
+
+ input, textarea {
+      -webkit-user-select: auto !important;
+      -khtml-user-select: auto !important;
+      -moz-user-select: auto !important;
+      -ms-user-select: auto !important;
+      -o-user-select: auto !important;
+      user-select: auto !important;  
+}
+
+.bar-positive .button.button-clear {
+  color: white !important;
+}
+
+body {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+.slider {
+  height: 100%;
+}
+.slider-slide {
+  padding-top: 80px;
+  color: #000;
+  background-color: #fff;
+  text-align: center;
+
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+  font-weight: 300;
+}
+
+button {
+  color: white;
+}
+
+.screenshot {
+  height:50%;
+  width:auto;
+}
+
+.screenshot-mobile {
+  height:80%;
+  width:auto;
+}
+
+#last-text {
+    margin-top: 25%;
+}
+
+#logo {
+  margin: 30px 0px;
+}
+
+#list {
+  width: 170px;
+  margin: 30px auto;
+  font-size: 20px;
+}
+#list ol {
+  margin-top: 30px;
+}
+#list ol li {
+  text-align: left;
+  list-style: decimal;
+  margin: 10px 0px;
+}
+
+.button.ng-hide{
+  display:none;
+}
+
+.angular-google-map-container { 
+  height: 400px; 
+}
+
+.btn-primary {
+    background-color: #c62011;
+    background-image: -moz-linear-gradient(center top , #c60f13, #c6390f);
+    color: white;
+}
+
+.item {
+  overflow: inherit ;
+  text-overflow: inherit ;
+  white-space: inherit;
+}
+
+.description {
+  text-align: right;
+}
+
+.additional-information {
+  text-color: gray;
+  font-size: 60%;
+}
+
+.info {
+  font-weight: bold;  
+}
+
+.list .item.item-accordion {
+  line-height: 38px;
+  padding-top: 0;
+  padding-bottom: 0;
+  transition: 0.09s all linear;
+}
+.list .item.item-accordion.ng-hide {
+  line-height: 0px;
+}
+.list .item.item-accordion.ng-hide-add,
+.list .item.item-accordion.ng-hide-remove {
+  display: block !important;
+}
+
+#intro {
+  text-align: center;
+}

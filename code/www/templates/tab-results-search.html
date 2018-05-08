@@ -1,0 +1,19 @@
+<ion-view view-title="{{search}} - ({{numberResults}} matches)">
+  <ion-content class="padding">
+  <i ng-show="numberResults == 0"><i>No results have been found. Try another request.</i></i>
+  <!-- {{ && 'No results found.' || ''}} -->
+
+  <ion-list ng-show="numberResults > 0">
+    <ion-item ng-repeat="match in results" href="#/tab/results/{{match.ip_str}}" class="item-icon-right">
+      <i class="icon ion-chevron-right icon-accessory"></i>
+        <img src="img/flags/{{match.location.country_code}}.png">&nbsp;
+      <strong>{{match.ip_str}}</strong>&nbsp;&nbsp;
+      <span class="additional-information">{{match.hostnames[0]}}</span><br />
+      {{match.location.country_name}} {{match.location.city != null && ', ' + match.location.city || ''}}<br />
+      Service: {{match.product}} ({{match.port}})</span><br />
+      <span class="additional-information">Added on: {{match.timestamp}} </span><br />
+    </ion-item>
+  </ion-list>
+  <ion-infinite-scroll ng-if="moreDataCanBeLoaded()" on-infinite="loadMore()" distance="1%"></ion-infinite-scroll>
+  </ion-content>
+</ion-view>

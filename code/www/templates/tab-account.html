@@ -1,0 +1,42 @@
+<ion-view view-title="Account">
+  <ion-content class="padding">
+    <div class="list card">
+        <div class="row">
+            <div class="col">
+                Display name
+            </div>
+            <div class="col">
+                {{user.display_name == null && 'N/A' || user.display_name}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                Credits
+            </div>
+            <div class="col">
+                {{user.credits}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                Member since
+            </div>
+            <div class="col">
+                {{user.created | date:'yyyy-MM-dd'}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                Key
+            </div>
+            <div class="col">
+                {{user.api_key}}
+            </div>
+        </div>
+    </div>
+	<button class="button button-full btn-primary" ng-click="disconnect()">
+      Disconnect
+    </button>
+    
+  </ion-content>
+</ion-view>

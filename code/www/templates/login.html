@@ -1,0 +1,28 @@
+<ion-view view-title="Shodan.io">
+  <ion-content class="padding">
+
+  <div id="intro">
+    <h4>Welcome to Shodan!</h4>
+    Insert your API key and start exploring with Shodan.
+  </div>
+    <div class="list list-inset">
+      <label class="item item-input">
+        <i class="icon ion-key placeholder-icon"></i>
+        <input type="text" placeholder="insert your API key" ng-model="formData.search">
+      </label>
+    </div>
+
+    <button class="button button-full btn-light" ng-click="scanBarcode()">
+      Scan QR Code
+    </button>
+
+    <br />
+    <br />
+    <br />
+    <button class="button button-full btn-primary" ng-click="search()">
+      Login
+    </button>
+
+
+  </ion-content>
+</ion-view>
