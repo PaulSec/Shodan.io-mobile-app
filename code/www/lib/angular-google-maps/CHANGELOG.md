@@ -1,5 +1,29 @@
-<a name"3.3.2"></a>
-### 3.3.2 (2016-05-13)
+<a name"2.4.1"></a>
+### 2.4.1 (2017-01-05)
+
+
+<a name"2.3.5"></a>
+### 2.3.5 (2016-09-19)
+
+
+#### Bug Fixes
+
+* **docs:** correct changelog version number ([62eb11fb](https://github.com/angular-ui/angular-google-maps/commit/62eb11fb))
+* **model-key:** model-key comparison on objects ([139c5e4a](https://github.com/angular-ui/angular-google-maps/commit/139c5e4a), closes [#1485](https://github.com/angular-ui/angular-google-maps/issues/1485))
+
+
+<a name"2.3.4"></a>
+### 2.3.4 (2016-08-15)
+
+
+#### Bug Fixes
+
+* **build:** webpack-dev-server is a peer dependency of grunt-webpack ([e7631d28](https://github.com/angular-ui/angular-google-maps/commit/e7631d28))
+* **map-loader:** change includeScript to place maps api script tag to head element instead of bod ([8d6ed161](https://github.com/angular-ui/angular-google-maps/commit/8d6ed161))
+
+
+<a name"2.3.3"></a>
+### 2.3.3 (2016-05-13)
 
 
 <a name"2.3.2"></a>

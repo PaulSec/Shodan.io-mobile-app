@@ -8,16 +8,15 @@
  */
 module.exports = {
   'compress': {
+    'collapse_vars': true,
+    'negate_iife': false,
     'pure_getters': true,
     'unsafe': true,
     'warnings': false
   },
-  'mangle': {
-    'except': ['define']
-  },
   'output': {
     'ascii_only': true,
-    'comments': /^!|@cc_on|@license|@preserve/i,
+    'comments': /@license/,
     'max_line_len': 500
   }
 };

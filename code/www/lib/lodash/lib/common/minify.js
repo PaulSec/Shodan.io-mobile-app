@@ -1,10 +1,10 @@
 'use strict';
 
-var _ = require('lodash'),
-    fs = require('fs-extra'),
-    uglify = require('uglify-js');
+const _ = require('lodash');
+const fs = require('fs-extra');
+const uglify = require('uglify-js');
 
-var uglifyOptions = require('./uglify.options');
+const uglifyOptions = require('./uglify.options');
 
 /*----------------------------------------------------------------------------*/
 
@@ -13,8 +13,8 @@ var uglifyOptions = require('./uglify.options');
  * invokes `callback` upon completion. The callback is invoked with one argument:
  * (error).
  *
- * If unspecified, `destPath` is `srcPath` with an extension of `.min.js`. For
- * example, a `srcPath` of `path/to/foo.js` would have a `destPath` of `path/to/foo.min.js`.
+ * If unspecified, `destPath` is `srcPath` with an extension of `.min.js`.
+ * (e.g. the `destPath` of `path/to/foo.js` would be `path/to/foo.min.js`)
  *
  * @param {string} srcPath The path of the file to minify.
  * @param {string} [destPath] The path to write the file to.
@@ -32,7 +32,7 @@ function minify(srcPath, destPath, callback, options) {
   if (!destPath) {
     destPath = srcPath.replace(/(?=\.js$)/, '.min');
   }
-  var output = uglify.minify(srcPath, _.defaults(options || {}, uglifyOptions));
+  const output = uglify.minify(srcPath, _.defaults(options || {}, uglifyOptions));
   fs.writeFile(destPath, output.code, 'utf-8', callback);
 }
 

@@ -4,11 +4,6 @@
 /** Environment shortcut. */
 var env = process.env;
 
-if (env.TRAVIS_SECURE_ENV_VARS == 'false') {
-  console.log('Skipping Sauce Labs jobs; secure environment variables are unavailable');
-  process.exit(0);
-}
-
 /** Load Node.js modules. */
 var EventEmitter = require('events').EventEmitter,
     http = require('http'),
@@ -104,17 +99,16 @@ var browserNameMap = {
 /** List of platforms to load the runner on. */
 var platforms = [
   ['Linux', 'android', '5.1'],
-  ['Windows 10', 'chrome', '50'],
-  ['Windows 10', 'chrome', '49'],
-  ['Windows 10', 'firefox', '46'],
-  ['Windows 10', 'firefox', '45'],
-  ['Windows 10', 'microsoftedge', '13'],
+  ['Windows 10', 'chrome', '54'],
+  ['Windows 10', 'chrome', '53'],
+  ['Windows 10', 'firefox', '50'],
+  ['Windows 10', 'firefox', '49'],
+  ['Windows 10', 'microsoftedge', '14'],
   ['Windows 10', 'internet explorer', '11'],
   ['Windows 8', 'internet explorer', '10'],
   ['Windows 7', 'internet explorer', '9'],
-  // ['OS X 10.10', 'ipad', '9.1'],
-  ['OS X 10.11', 'safari', '9'],
-  ['OS X 10.10', 'safari', '8']
+  ['macOS 10.12', 'safari', '10'],
+  ['OS X 10.11', 'safari', '9']
 ];
 
 /** Used to tailor the `platforms` array. */
@@ -294,7 +288,7 @@ function optionToArray(name, string) {
 function optionToValue(name, string) {
   var result = string.match(RegExp('^' + name + '(?:=([\\s\\S]+))?$'));
   if (result) {
-    result = _.result(result, 1);
+    result = _.get(result, 1);
     result = result ? _.trim(result) : true;
   }
   if (result === 'false') {
@@ -366,8 +360,8 @@ function onJobStart(error, res, body) {
   if (this.stopping) {
     return;
   }
-  var statusCode = _.result(res, 'statusCode'),
-      taskId = _.first(_.result(body, 'js tests'));
+  var statusCode = _.get(res, 'statusCode'),
+      taskId = _.first(_.get(body, 'js tests'));
 
   if (error || !taskId || statusCode != 200) {
     if (this.attempts < this.retries) {
@@ -408,19 +402,19 @@ function onJobStatus(error, res, body) {
   if (!this.running || this.stopping) {
     return;
   }
-  var completed = _.result(body, 'completed', false),
-      data = _.first(_.result(body, 'js tests')),
+  var completed = _.get(body, 'completed', false),
+      data = _.first(_.get(body, 'js tests')),
       elapsed = (_.now() - this.timestamp) / 1000,
-      jobId = _.result(data, 'job_id', null),
-      jobResult = _.result(data, 'result', null),
-      jobStatus = _.result(data, 'status', ''),
-      jobUrl = _.result(data, 'url', null),
+      jobId = _.get(data, 'job_id', null),
+      jobResult = _.get(data, 'result', null),
+      jobStatus = _.get(data, 'status', ''),
+      jobUrl = _.get(data, 'url', null),
       expired = (elapsed >= queueTimeout && !_.includes(jobStatus, 'in progress')),
       options = this.options,
       platform = options.platforms[0];
 
   if (_.isObject(jobResult)) {
-    var message = _.result(jobResult, 'message');
+    var message = _.get(jobResult, 'message');
   } else {
     if (typeof jobResult == 'string') {
       message = jobResult;
@@ -442,7 +436,7 @@ function onJobStatus(error, res, body) {
   }
   var description = browserName(platform[1]) + ' ' + platform[2] + ' on ' + _.startCase(platform[0]),
       errored = !jobResult || !jobResult.passed || reError.test(message) || reError.test(jobStatus),
-      failures = _.result(jobResult, 'failed'),
+      failures = _.get(jobResult, 'failed'),
       label = options.name + ':',
       tunnel = this.tunnel;
 
@@ -463,7 +457,7 @@ function onJobStatus(error, res, body) {
       return;
     }
     else {
-      if (typeof message == 'undefined') {
+      if (message === undefined) {
         message = 'Results are unavailable. ' + details;
       }
       console.error(label, description, chalk.red('failed') + ';', message);

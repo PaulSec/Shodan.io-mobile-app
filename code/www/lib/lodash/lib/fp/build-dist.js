@@ -1,18 +1,19 @@
 'use strict';
 
-var _ = require('lodash'),
-    async = require('async'),
-    path = require('path'),
-    webpack = require('webpack');
+const _ = require('lodash');
+const async = require('async');
+const path = require('path');
+const webpack = require('webpack');
 
-var file = require('../common/file');
+const file = require('../common/file');
+const util = require('../common/util');
 
-var basePath = path.join(__dirname, '..', '..'),
-    distPath = path.join(basePath, 'dist'),
-    fpPath = path.join(basePath, 'fp'),
-    filename = 'lodash.fp.js';
+const basePath = path.join(__dirname, '..', '..');
+const distPath = path.join(basePath, 'dist');
+const fpPath = path.join(basePath, 'fp');
+const filename = 'lodash.fp.js';
 
-var fpConfig = {
+const fpConfig = {
   'entry': path.join(fpPath, '_convertBrowser.js'),
   'output': {
     'path': distPath,
@@ -26,7 +27,7 @@ var fpConfig = {
   ]
 };
 
-var mappingConfig = {
+const mappingConfig = {
   'entry': path.join(fpPath, '_mapping.js'),
   'output': {
     'path': distPath,
@@ -38,18 +39,18 @@ var mappingConfig = {
 
 /*----------------------------------------------------------------------------*/
 
-function onComplete(error) {
-  if (error) {
-    throw error;
-  }
-}
-
+/**
+ * Creates browser builds of the FP converter and mappings at the `target` path.
+ *
+ * @private
+ * @param {string} target The output directory path.
+ */
 function build() {
   async.series([
     _.partial(webpack, mappingConfig),
     _.partial(webpack, fpConfig),
     file.min(path.join(distPath, filename))
-  ], onComplete);
+  ], util.pitch);
 }
 
 build();

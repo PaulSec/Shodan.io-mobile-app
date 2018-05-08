@@ -2,6 +2,9 @@ log = require('util').log
 _ = require 'lodash'
 kickoff = require 'karma-kickoff'
 argv = require('yargs').argv
+coffeelint = require './grunt/coffeelint'
+watch = require './grunt/options/watch'
+
 
 module.exports = (grunt) ->
   # Load the required plugins
@@ -41,24 +44,39 @@ module.exports = (grunt) ->
     allExamplesOpen[root] =
       path: pathValue
 
-#  console.log allExamplesOpen, true
 
   showOpenType = (toIterate = allExamplesOpen) ->
     _(toIterate).each (v, k) ->
       log "#{k} -> #{v.path}"
+
   #showAllExamples()
+
   options.open = _.extend options.open, allExamplesOpen
   grunt.initConfig options
 
-  grunt.registerTask 'build', ['bower', 'clean:dist', 'jshint', 'mkdir', 'coffee', 'ngAnnotate',
-  'concat:libs', 'replace', 'webpack']
+  lints = _.keys(_.omit(watch.coffeelint, 'options'))
+  coffeeLints = lints.map (n) -> "coffeelint:#{n}"
+  coffeeLintsThrow = lints.map (n) -> "coffeelint:#{n}:throw"
+
+  lints.forEach (n) ->
+    grunt.registerTask "coffeelint:#{n}", ->
+      coffeelint({src:watch.coffeelint[n].files, doThrow:false}, @async())
+
+    grunt.registerTask "coffeelint:#{n}:throw", ->
+      coffeelint({src:watch.coffeelint[n].files}, @async())
+
+  grunt.registerTask 'lint', coffeeLints
+
+  grunt.registerTask 'lintWatch', lints.map (n) -> "watch:coffeelint-#{n}"
+
+  grunt.registerTask 'build', coffeeLintsThrow.concat ['bower', 'clean:dist', 'jshint', 'mkdir', 'lint', 'coffee', 'ngAnnotate',
+  'concat:libs', 'replace', 'webpack:commonjsDeps']
 
   grunt.registerTask 'buildDist', ['build', 'concat:dist']
 
   grunt.registerTask "default", [ 'verbosity', 'buildDist', 'copy', 'uglify:dist', 'uglify:streetview', 'karma']
 
-  grunt.registerTask "buildAll", [ "build", "concat",
-    "uglify", "copy", "karma", "graph"]
+  grunt.registerTask "buildAll",  ["build", "concat", "uglify", "copy", "karma", "graph"]
 
   # run default "grunt" prior to generate _SpecRunner.html
   grunt.registerTask "spec", [ 'verbosity', "buildDist",
@@ -72,7 +90,7 @@ module.exports = (grunt) ->
 
   grunt.registerTask 'offline', ['default-no-specs', 'watch:offline']
 
-  dev = ["clean:dist", "jshint", "mkdir", "coffee", "concat:libs", "replace", "webpack", "concat", "copy"]
+  dev = ["clean:dist", "jshint", "mkdir", "coffee", "concat:libs", "replace", "webpack:commonjsDeps", "concat", "copy"]
 
   grunt.registerTask "dev", dev.concat ["uglify:distMapped", "uglify:streetviewMapped", "karma"]
 
@@ -130,6 +148,11 @@ module.exports = (grunt) ->
     kickoff @async(),
       logFn: grunt.log.oklns
       configFile: require.resolve './karma.conf.coffee'
+
+  grunt.registerTask 'karma:acceptance', 'karma runner', ->
+    kickoff @async(),
+      logFn: grunt.log.oklns
+      configFile: require.resolve './karma.acceptance.conf.coffee'
 
   grunt.registerTask 'karmaSpecific', 'karma runner', ->
     kickoff @async(),

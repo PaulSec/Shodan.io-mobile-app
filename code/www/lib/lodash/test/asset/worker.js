@@ -1,3 +1,5 @@
+'use strict';
+
 self.console || (self.console = { 'log': function() {} });
 
 addEventListener('message', function(e) {
@@ -12,4 +14,4 @@ addEventListener('message', function(e) {
     }
     postMessage(_.VERSION);
   }
-}, false);
+});

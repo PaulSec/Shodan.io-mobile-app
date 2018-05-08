@@ -1,11 +1,11 @@
 'use strict';
 
-var _ = require('lodash'),
-    fs = require('fs-extra'),
-    glob = require('glob'),
-    path = require('path');
+const _ = require('lodash');
+const fs = require('fs-extra');
+const glob = require('glob');
+const path = require('path');
 
-var minify = require('../common/minify.js');
+const minify = require('../common/minify.js');
 
 /*----------------------------------------------------------------------------*/
 
@@ -23,15 +23,15 @@ function copy(srcPath, destPath) {
 }
 
 /**
- * Creates an object of compiled template and base name pairs that match `pattern`.
+ * Creates an object of base name and compiled template pairs that match `pattern`.
  *
  * @memberOf file
  * @param {string} pattern The glob pattern to be match.
  * @returns {Object} Returns the object of compiled templates.
  */
 function globTemplate(pattern) {
-  return _.transform(glob.sync(pattern), function(result, filePath) {
-    var key = path.basename(filePath, path.extname(filePath));
+  return _.transform(glob.sync(pattern), (result, filePath) => {
+    const key = path.basename(filePath, path.extname(filePath));
     result[key] = _.template(fs.readFileSync(filePath, 'utf8'));
   }, {});
 }
@@ -64,8 +64,8 @@ function write(destPath, data) {
 /*----------------------------------------------------------------------------*/
 
 module.exports = {
-  'copy': copy,
-  'globTemplate': globTemplate,
-  'min': min,
-  'write': write
+  copy,
+  globTemplate,
+  min,
+  write
 };

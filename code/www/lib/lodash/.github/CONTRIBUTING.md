@@ -1,7 +1,7 @@
 # Contributing to Lodash
 
 Contributions are always welcome. Before contributing please read the
-[code of conduct](https://jquery.org/conduct/) &
+[code of conduct](https://js.foundation/conduct/) &
 [search the issue tracker](https://github.com/lodash/lodash/issues); your issue
 may have already been discussed or fixed in `master`. To contribute,
 [fork](https://help.github.com/articles/fork-a-repo/) Lodash, commit your changes,
@@ -13,8 +13,8 @@ Feature requests should be submitted in the
 [issue tracker](https://github.com/lodash/lodash/issues), with a description of
 the expected behavior & use case, where they’ll remain closed until sufficient interest,
 [e.g. :+1: reactions](https://help.github.com/articles/about-discussions-in-issues-and-pull-requests/),
-has been shown by the community. Before submitting a request, please search for
-similar ones in the
+has been [shown by the community](https://github.com/lodash/lodash/issues?q=label%3A%22votes+needed%22+sort%3Areactions-%2B1-desc).
+Before submitting a request, please search for similar ones in the
 [closed issues](https://github.com/lodash/lodash/issues?q=is%3Aissue+is%3Aclosed+label%3Aenhancement).
 
 ## Pull Requests
@@ -31,9 +31,9 @@ Run unit tests from the command-line via `npm test`, or open `test/index.html` &
 
 ## Contributor License Agreement
 
-Lodash is a member of the [jQuery Foundation](https://jquery.org/).
-As such, we request that all contributors sign the jQuery Foundation
-[contributor license agreement (CLA)](https://contribute.jquery.org/CLA/).
+Lodash is a member of the [JS Foundation](https://js.foundation/).
+As such, we request that all contributors sign the JS Foundation
+[contributor license agreement (CLA)](https://js.foundation/CLA/).
 
 For more information about CLAs, please check out Alex Russell’s excellent post,
 [“Why Do I Need to Sign This?”](https://infrequently.org/2008/06/why-do-i-need-to-sign-this/).
