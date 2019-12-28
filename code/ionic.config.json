@@ -1,14 +1,7 @@
 {
   "name": "shodan",
-  "app_id": "",
-  "gulpStartupTasks": [
-    "sass",
-    "watch"
-  ],
-  "watchPatterns": [
-    "www/**/*",
-    "!www/lib/**/*"
-  ],
-  "integrations": {},
-  "type": "ionic1"
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
 }

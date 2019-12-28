@@ -1,0 +1,24 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>
+        My profile
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content padding>
+  <ion-card>
+    <!-- <ion-item>Credits: {{profile?.credits}}</ion-item> -->
+    <ion-item [hidden]="profile?.display_name == null">Display name: {{profile?.display_name}}</ion-item>
+    <ion-item>Plan: {{info?.plan}}</ion-item>
+    <ion-item>Query credits: {{info?.query_credits}}</ion-item>
+    <ion-item>Scan credits: {{info?.scan_credits}}</ion-item>
+    <ion-item>Unlocked: {{info?.unlocked}}</ion-item>
+    <ion-item [hidden]="!profile?.created">Created: <ion-datetime display-format="MMM DD, YYYY" [(ngModel)]="profile.created"></ion-datetime></ion-item>
+    <!-- <ion-item [hidden]="!profile?.created && !profile && profile.created">Created: </ion-item> -->
+  </ion-card>
+  <ion-button expand="block" color="danger" (click)="disconnect()">Disconnect</ion-button>
+</ion-content>

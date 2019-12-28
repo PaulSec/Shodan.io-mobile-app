@@ -1,0 +1,42 @@
+<ion-app [class]="activeTheme">
+  <ion-split-pane>
+    <ion-menu>
+      <ion-header>
+          <ion-toolbar>
+            <ion-avatar slot="start">
+              <img src="/assets/icon/logo.png">
+            </ion-avatar>
+            <ion-label>&nbsp;&nbsp;Shodan.io</ion-label>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
+            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+              <ion-icon slot="start" [name]="p.icon"></ion-icon>
+              <ion-label>
+                {{p.title}}
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-item lines="full">
+            <ion-icon slot="start" name="moon"></ion-icon>
+            <ion-label>
+              Dark Theme
+            </ion-label>
+            <ion-toggle id="themeToggle" slot="end" [checked]="isDarkTheme"></ion-toggle>
+          </ion-item>  
+        </ion-list>
+        <!-- <ion-button (click)="changeTheme('autumn')">Autumn</ion-button>
+        <ion-button (click)="changeTheme('night')">Dark</ion-button>
+        <ion-button (click)="changeTheme('neon')">Neon</ion-button>         -->
+      </ion-content>
+      <ion-footer>
+          <ion-toolbar>
+              <span style="font-size: 80%">&nbsp;&nbsp;Version: {{ version }}</span>
+          </ion-toolbar>
+        </ion-footer>      
+    </ion-menu>
+    <ion-router-outlet main></ion-router-outlet>
+  </ion-split-pane>
+</ion-app>

@@ -1,0 +1,38 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-button slot="end" [disabled]="bookmarks?.length == 0" (click)="flush()">
+          <ion-icon name="trash"></ion-icon>
+        </ion-button>
+      <ion-title>
+        My bookmarks
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content padding>
+    <ion-card [hidden]="bookmarks?.length > 0">
+        <ion-card-content>You don't seem to have any queries saved on your device.</ion-card-content>
+    </ion-card>    
+  <ion-card>
+    <ion-card-content [hidden]="bookmarks?.length === 0">
+    <ion-list>
+      <ion-item *ngFor="let bookmark of bookmarks">
+        <ion-button slot="end" (click)="dialogDelete(bookmark)"><ion-icon name="remove"></ion-icon></ion-button>
+        <ion-label>
+          <ion-row (click)="shortcutBookmark(bookmark)">
+            <ion-col>
+              Type: {{bookmark.type}}
+            </ion-col>
+            <ion-col>
+              Value: {{bookmark.key}}
+            </ion-col>
+          </ion-row>
+        </ion-label>
+      </ion-item>
+    </ion-list>      
+    </ion-card-content>
+  </ion-card>
+</ion-content>

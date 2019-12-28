@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Home
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle>Get Started</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <!-- <p>Now that your app has been created, you'll want to start building out features and components. Check out some of the resources below for next steps.</p> -->
+        <ion-input placeholder="Enter your Shodan query" type="text" [(ngModel)]="query"></ion-input>
+        <ion-button expand="block" [disabled]="query.length == 0" (click)="searchShodan(query)">search</ion-button>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+        <ion-card-header>
+          <ion-card-subtitle>Type on the filters you want to populate the query with.</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+            <!-- <ion-button (click)="changeTheme('autumn')">Autumn</ion-button>
+            <ion-button (click)="changeTheme('night')">Dark</ion-button>
+            <ion-button (click)="changeTheme('neon')">Neon</ion-button>           -->
+        <ion-list>
+          <ion-item *ngFor="let filter of filters" (click)="addFilter(filter)">
+                {{filter.filter}}&nbsp;&nbsp;<span style="font-size: 75%; color: grey;">{{filter.description}}</span>
+              <!-- <ion-row (click)="addFilter(filter)">
+                <ion-col>
+                  
+                </ion-col>
+                <ion-col>
+                  
+                </ion-col>
+              </ion-row> -->
+          </ion-item>
+        </ion-list>      
+        </ion-card-content>
+      </ion-card>    
+</ion-content>

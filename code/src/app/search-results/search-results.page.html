@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-button slot="end" [disabled]="results == undefined" (click)="bookmarkSearch()">
+            <ion-icon name="bookmark"></ion-icon>
+          </ion-button>        
+    <ion-title>Search Results</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card [hidden]="results == undefined">
+      <ion-card-header>
+        <ion-card-subtitle>{{ results?.total }} results for "{{ query }}"</ion-card-subtitle>
+      </ion-card-header>
+      <ion-list>
+      <ion-item *ngFor="let item of results?.matches" (click)="getHostDetails(item)">
+        <ion-label>  
+            <p><b>{{item.ip_str}}</b>&nbsp;&nbsp;&nbsp;<span style="color: grey; font-size: 75%">{{item.hostnames[0]}}</span></p>
+            <p><span [hidden]="item.location.city == undefined">{{item.location.city}}, </span>{{item.location.country_name}}&nbsp;<img src="/assets/flags/{{item.location.country_code}}.png" style="height: 10px; width: auto"></p>
+            <p>Service: {{item.product}} (Port: {{item.port}})</p>
+            <p><span [hidden]="item.info == undefined" style="color: grey;">Additional infos: {{item.info}}</span></p>
+            <p><span [hidden]="item.vulns == undefined" style="font-size: 90%; color: red;">Some vulnerabilities have been detected!</span></p>
+            <p><span style="font-size: 75%; color: grey;">Added on {{item.timestamp}}</span></p>
+          </ion-label>
+          <ion-icon name="arrow-dropright" slot="end"></ion-icon>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="getMoreResults($event)">
+      <ion-infinite-scroll-content loadingSpinner="circles" loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+</ion-content>

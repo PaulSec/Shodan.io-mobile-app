@@ -1,0 +1,37 @@
+<ion-header>
+    <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Alerts details</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content padding>
+    <ion-card>
+      <ion-card-content [hidden]="!alert">
+        <ion-label>
+          <ion-row>
+            <ion-col>
+              Name: {{alert?.name}} ({{alert?.id}})
+            </ion-col>
+          </ion-row>
+          <ion-row>
+              <ion-col>
+                Filters: {{alert?.filters.ip}}
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                Created: {{alert?.created}}
+              </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                  Size :  {{alert?.size}}
+                </ion-col>
+            </ion-row>  
+          </ion-label>  
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
+  

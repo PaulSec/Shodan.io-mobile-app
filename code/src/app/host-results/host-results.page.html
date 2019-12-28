@@ -1,0 +1,115 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+          </ion-buttons>
+          <ion-button slot="end" [disabled]="!item" (click)="bookmarkHost()">
+              <ion-icon name="bookmark"></ion-icon>
+            </ion-button>  
+    <ion-title>Host {{item?.ip_str}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card [hidden]="!item">
+    <ion-card-header>
+      <div><ion-icon name="globe"></ion-icon>&nbsp;{{item?.ip_str}}</div>
+      <div><span style="font-size: 75%; color: grey;">{{ item?.hostnames[0]}}</span></div>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-col>
+        Country
+        </ion-col>
+        <ion-col>
+          <ion-label>
+            <p>{{item?.country_code}}<img src="/assets/flags/{{item?.country_code}}.png" style="height: 10px; width: auto"></p>
+          </ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+        City
+        </ion-col>
+        <ion-col>
+        {{item?.city || 'N/A'}}
+        </ion-col>
+      </ion-row>
+        <ion-row>
+        <ion-col>
+        Organization
+        </ion-col>
+        <ion-col>
+        {{item?.org || 'N/A'}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+        ISP
+        </ion-col>
+        <ion-col>
+        {{item?.isp || 'N/A'}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+        ASN
+        </ion-col>
+        <ion-col>
+        {{item?.asn}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+        Last update
+        </ion-col>
+        <ion-col>
+        {{item?.last_update}}
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+  <ion-card [hidden]="!item?.ports">
+      <ion-card-header>
+        Ports opened on the remote host
+      </ion-card-header>
+      <ion-card-content>
+          <ion-button size="small" color="light" *ngFor="let port of item?.ports" [hidden]="port == ''" (click)="showPayload(port)">{{ port }}</ion-button>
+      </ion-card-content>
+      <ion-card-content>
+          <ion-row [hidden]="!selectedPort || !selectedPort.product">
+              <ion-col>
+                Product
+              </ion-col>
+              <ion-col>
+                {{selectedPort?.product}}
+              </ion-col>
+            </ion-row>
+            <ion-row [hidden]="!selectedPort || !selectedPort.version">
+                <ion-col>
+                  Version 
+                </ion-col>
+                <ion-col>
+                  {{selectedPort?.version}}
+                </ion-col>
+              </ion-row>
+              <ion-row [hidden]="!selectedPort || !selectedPort.transport">
+                <ion-col>
+                  Transport method
+                </ion-col>
+                <ion-col>
+                  {{selectedPort?.transport}}
+                </ion-col>
+              </ion-row>
+        <pre>{{selectedPort?.data}}</pre>
+      </ion-card-content>
+    </ion-card>  
+  <ion-card [hidden]="!item?.vulns">
+    <ion-card-header>
+      Vulnerabilities associated with this host
+    </ion-card-header>
+    <ion-card-content>
+        <ion-button size="small" color="danger" *ngFor="let vuln of item?.vulns" [hidden]="tag == ''">{{ vuln }}</ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

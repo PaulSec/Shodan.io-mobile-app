@@ -1,0 +1,39 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>
+        Queries
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+<ion-content padding>
+  <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle>Top queries (ranked by # of votes)</ion-card-subtitle>
+      </ion-card-header>
+      <ion-list>
+      <ion-item *ngFor="let item of queries" (click)="searchQuery(item)">
+        <ion-label>
+        Name: {{item.title}}&nbsp;&nbsp;
+        <div class="item-description" style="color: grey;">
+          Description: {{ item.description | slice:0:100}}<span [hidden]="item.description.length <= 100" style="color: grey;">...</span>
+        </div>
+        <div class="item-note" style="color: grey;">
+            Votes: {{item.votes}}
+          </div>  
+        <div>
+          <ion-button size="small" color="light" *ngFor="let tag of item.tags" [hidden]="tag == ''">{{ tag }}</ion-button>
+      </div>
+      </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+  <!-- [disabled]="infiniteScrollDisabled()" -->
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="getMoreQueries($event)">
+      <ion-infinite-scroll-content loadingSpinner="circles" loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ion-content>
+  
