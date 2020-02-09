@@ -1,0 +1,36 @@
+name: Build Android app
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Cache node modules
+      uses: actions/cache@v1
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-    
+    - name: Install latest cordova Install
+      run: |
+        npm install
+        npm install node-sass
+        sudo npm install -g ionic
+        sudo npm install -g cordova@latest
+        sudo npm install -g cordova-android@latest
+    - name: Add Android platform
+      run: |
+        ionic cordova platform remove android
+        ionic cordova platform check android
+        ionic cordova platform add android
+    - name: Build
+      run: ionic cordova build android --verbose
+    - name: Upload app
+      uses: actions/upload-artifact@v1
+      with:
+        name: Shodan_debug.apk
+        path: platforms/android/app/build/outputs/apk/debug/app-debug.apk
