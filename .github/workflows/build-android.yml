@@ -32,5 +32,5 @@ jobs:
     - name: Upload app
       uses: actions/upload-artifact@v1
       with:
-        name: Shodan_debug.apk
-        path: platforms/android/app/build/outputs/apk/*.apk
+        name: Shodan_release_unsigned.apk
+        path: platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk
