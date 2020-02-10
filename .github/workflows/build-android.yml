@@ -28,9 +28,9 @@ jobs:
         ionic cordova platform check android
         ionic cordova platform add android
     - name: Build
-      run: ionic cordova build android --verbose
+      run: ionic cordova build --release android --verbose
     - name: Upload app
       uses: actions/upload-artifact@v1
       with:
         name: Shodan_debug.apk
-        path: platforms/android/app/build/outputs/apk/debug/app-debug.apk
+        path: platforms/android/app/build/outputs/apk/*.apk
