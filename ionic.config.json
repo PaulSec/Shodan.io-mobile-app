@@ -1,7 +1,0 @@
-{
-  "name": "shodan",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "angular"
-}
