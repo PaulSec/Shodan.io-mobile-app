@@ -1,0 +1,64 @@
+{
+  "expo": {
+    "name": "Shodan Mobile",
+    "slug": "shodan-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/shodan-icon.png",
+    "userInterfaceStyle": "dark",
+    "scheme": "shodan-mobile",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0A0E17"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "io.shodan.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Shodan Mobile needs camera access to scan QR codes for authentication."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/shodan-adaptive-icon.png",
+        "backgroundColor": "#0A0E17"
+      },
+      "package": "io.shodan.app",
+      "permissions": [
+        "CAMERA",
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "blockedPermissions": [
+        "com.google.android.gms.permission.AD_ID"
+      ],
+      "config": {
+        "googleMaps": {
+          "apiKey": "YOUR_GOOGLE_MAPS_API_KEY"
+        }
+      }
+    },
+    "web": {
+      "favicon": "./assets/shodan-favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      "expo-secure-store",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow Shodan Mobile to access your camera for QR code scanning."
+        }
+      ]
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "8136e688-cec8-4ebd-af1a-d8b0f98784d2"
+      }
+    }
+  }
+}

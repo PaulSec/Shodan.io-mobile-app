@@ -1,55 +1,121 @@
-# Shodan.io-mobile-app
-Official repository for the Shodan.io mobile Application
+# Shodan Mobile
 
-The Android version can actually be found [here](https://play.google.com/store/apps/details?id=io.shodan.app). 
-The iOS version is not available anymore since Apple subscription was really expensive for such few users. 
-However, the source code is now available so you can easily build the application and make it run on your iPhone/iPad. 
+Mobile and web client for exploring Shodan data from your own API key.
 
-# How? 
+Built with Expo + React Native, this app lets you search hosts, inspect full device details, browse community queries, view results on a map, and save hosts/searches locally.
 
-This app has been built using the [ionic framework](http://ionicframework.com/) which is basically using [PhoneGap](http://phonegap.com/) and [Cordova](https://cordova.apache.org/) but also includes [AngularJS](https://angularjs.org/) to build hybrid application (HTML5 + JavaScript basically).
+## Features
 
-# Contribution
+- API key authentication (manual entry or QR code scanning)
+- Host search with examples, pagination, and screenshot-only mode
+- Full device detail pages (banners, metadata, ports, screenshots)
+- Community query explorer (top-voted and latest modes)
+- Interactive map view of current search results
+- Saved hosts and saved searches (persisted locally)
+- Profile screen with plan and API usage information
 
-Good news! The source code is now avaible.
+## Tech Stack
 
-* **Ionic-cli is required** before you start doing anything. 
-* Go inside the ```code``` repository 
-* ```ionic serve``` and this should install everything for you, run it locally and open up your fav browser with the app loaded in!
+- Expo SDK 54 / React Native 0.81 / React 19
+- Expo Router (file-based routing)
+- Zustand (state management)
+- Axios (Shodan API client)
+- `expo-secure-store` (API key storage)
+- `react-native-maps` (native map) + Leaflet (`react-leaflet` / WebView map)
 
-Want to build for your platform? No worries, Ionic got you cover: 
+## Prerequisites
 
-1. Add the platform that you want to
+- Node.js 20+
+- npm 10+
+- Expo CLI / EAS CLI (via `npx` is fine)
+- For Android local builds:
+  - Java 17 (Java 21 fallback supported by `scripts/eas-android-local.sh`)
+  - Android SDK installed
 
-```bash
-ionic add platform ios|android|...
-```
-
-2. Build the platform you want to application to run
-
-```bash
-ionic build platform ios|android|...
-```
-
-The Ionic documentation is worth it here: [https://ionicframework.com/docs/cli/cordova/build/](https://ionicframework.com/docs/cli/cordova/build/) 
-
-# Updating ionic version? 
-
-For this, I was using:
+## Getting Started
 
 ```bash
-rm www/lib/ionic/bower.json
-ionic lib update
+npm ci
+npm run start
 ```
 
-# Updating other libs using bower?
-
-For this, use the command:
+Then run on your target platform:
 
 ```bash
-bower update
+npm run android
+npm run ios
+npm run web
 ```
 
-# Contact me? 
+## Authentication
 
-If you want to contact me, use my twitter handle: [@PaulWebSec](https://twitter.com/PaulWebSec) 
+You need a Shodan API key to use the app:
+
+- Manual login: paste key on the auth screen
+- QR login: scan a QR containing one of:
+  - Raw key string
+  - JSON (`apiKey`, `api_key`, `shodan_api_key`, `key`, or `token`)
+  - URL query param with the same keys
+
+The API key is stored securely with `expo-secure-store`.
+
+## Configuration
+
+### Google Maps (Android native map)
+
+`app.json` contains:
+
+```json
+"android": {
+  "config": {
+    "googleMaps": {
+      "apiKey": "YOUR_GOOGLE_MAPS_API_KEY"
+    }
+  }
+}
+```
+
+Replace with a valid key for production Android map usage.
+
+## Useful Scripts
+
+- `npm run start`: start Expo dev server
+- `npm run android`: run Android target from Expo
+- `npm run ios`: run iOS target from Expo
+- `npm run web`: run web target from Expo
+- `npm run eas:android:local`: local EAS Android build (default `production`)
+- `npm run eas:android:local:apk`: local APK build (`preview` profile)
+- `npm run eas:android:local:aab`: local AAB build (`production` profile)
+- `npm run eas:android:remote`: remote Android production build
+- `npm run eas:android:submit`: submit latest Android build to Play Console
+
+## Android Play Store Release (GitHub Actions)
+
+Workflow: `.github/workflows/android-playstore-release.yml`
+
+- Trigger: pushing any Git tag
+- Builds Android production artifact using EAS
+- Submits latest build to Google Play
+
+Required repository secrets:
+
+- `EXPO_TOKEN`
+- `GOOGLE_SERVICE_ACCOUNT_JSON`
+
+## Project Structure
+
+```text
+app/                    Expo Router routes (auth, tabs, device pages)
+src/api/                Shodan API client, types, error parsing
+src/stores/             Zustand stores (auth/search/saved/theme)
+src/components/         UI and feature components
+src/screens/map/        Platform-specific map implementations
+src/utils/              Storage, formatting, coordinates, haptics
+scripts/                Build helper scripts
+.github/workflows/      CI/CD workflows
+```
+
+## Notes
+
+- This app is an unofficial client and uses your own Shodan account/API access.
+- Respect Shodan’s terms of service and applicable laws when querying infrastructure data.
