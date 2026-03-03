@@ -1,0 +1,56 @@
+name: Android APK Release
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  build-android-apk:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: android-playstore-release-${{ github.ref }}
+      cancel-in-progress: false
+    env:
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Setup Expo and EAS
+        uses: expo/expo-github-action@v8
+        with:
+          token: ${{ secrets.EXPO_TOKEN }}
+          eas-version: latest
+
+      - name: Validate required secrets
+        run: |
+          test -n "$EXPO_TOKEN" || (echo "Missing EXPO_TOKEN secret" && exit 1)
+
+      - name: Build Android APK (preview profile)
+        id: build_apk
+        run: |
+          BUILD_JSON="$(npx eas-cli build --platform android --profile preview --non-interactive --wait --json)"
+          echo "$BUILD_JSON" > /tmp/eas-build.json
+          APK_URL="$(echo "$BUILD_JSON" | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{const j=JSON.parse(s);const b=(Array.isArray(j)?j:[j])[0]||{};const u=b?.artifacts?.buildUrl||b?.artifacts?.applicationArchiveUrl;if(!u){console.error('No APK URL found in EAS build output');process.exit(1);}process.stdout.write(u);});")"
+          APK_FILE="shodan-mobile-${GITHUB_REF_NAME}.apk"
+          curl -fL "$APK_URL" -o "$APK_FILE"
+          echo "apk_file=$APK_FILE" >> "$GITHUB_OUTPUT"
+
+      - name: Attach APK to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ steps.build_apk.outputs.apk_file }}
+          generate_release_notes: true
