@@ -23,8 +23,7 @@ export class AskAPIKeyPage implements OnInit {
   subscribe() {
     this.api.apiKey = this.apiKey;
     this.api.getProfile().then((value) => {
-      console.log(value);
-      if ("created" in value) {
+      if (value && "created" in (value as object)) {
         this.storage.setAPIKey(this.apiKey).then((val) => {
           this.router.navigateByUrl('/home');
         });

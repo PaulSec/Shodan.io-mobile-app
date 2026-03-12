@@ -31,7 +31,7 @@ export class ApiService {
         resolve(data);
       },
       err => {
-        console.log(err);
+        resolve(err);
       });
     })
   }
@@ -43,7 +43,6 @@ export class ApiService {
   async getHostsCount(query: string, facets: string) {
     var tmpUrl = this.apiUrl + "/shodan/host/count" + "?key=" + this.apiKey;
     this.http.get(tmpUrl, {}).subscribe((res) => {
-      console.log(res);
     })
   }
 
@@ -58,7 +57,7 @@ export class ApiService {
         resolve(data);
       },
       err => {
-        console.log(err);
+        resolve(err);
       });
     })
   }
@@ -72,20 +71,19 @@ export class ApiService {
         resolve(data);
       },
       err => {
-        console.log(err);
+        resolve(err);
       });
     });    
   }
 
   async getPorts() {
     var tmpUrl = this.apiUrl + "/shodan/ports?key=" + this.apiKey;
-    console.log(tmpUrl);
     return new Promise(resolve => {
       this.http.get(tmpUrl).subscribe(data => {
         resolve(data);
       },
       err => {
-        console.log(err);
+        resolve(err);
       });
     });
   }
@@ -101,7 +99,7 @@ export class ApiService {
         resolve(data);
       },
       err => {
-        console.log(err);
+        resolve(err);
       });
     });
   }
@@ -115,7 +113,7 @@ export class ApiService {
         resolve(data);
       },
       err => {
-        console.log(err);
+        resolve(err);
       });
     });    
   }
@@ -128,14 +126,13 @@ export class ApiService {
         resolve(data);
       },
       err => {
-        console.log(err);
+        resolve(err);
       })
     });
   }
 
   async createNewNetworkAlert(data) {
     let alert = JSON.stringify(data);
-    console.log(alert);
     var tmpUrl = this.apiUrl + "/shodan/alert?key=" + this.apiKey;
     this.displayToastMessage("Creating network alert '" + data.name + "'");
     return new Promise(resolve => {
@@ -144,7 +141,6 @@ export class ApiService {
         resolve(result);
       },
       err => {
-        console.log(err);
         resolve(err);
       })
     })
@@ -185,7 +181,6 @@ export class ApiService {
         resolve(data);
       },
       err => {
-        console.log(err);
         resolve(err);
       });
     });
@@ -196,11 +191,9 @@ export class ApiService {
     this.displayToastMessage("Fetching API key info...");
     return new Promise(resolve => {
       this.http.get(tmpUrl).subscribe(data => {
-        console.log(data);
         resolve(data);
       },
       err => {
-        console.log(err);
         resolve(err);
       })
     })
