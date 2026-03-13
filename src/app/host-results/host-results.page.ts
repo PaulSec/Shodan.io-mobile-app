@@ -42,13 +42,11 @@ export class HostResultsPage implements OnInit {
 
   showPayload(port) {
     console.log(port);
-    for (var i = 0; i < this.item.data.length; i++) {
-      if (this.item.data[i].port == port) {
-        console.log(this.item.data[i].port);
-        this.selectedPort = this.item.data[i]
-        console.log(this.selectedPort);
-        break;
-      }
+    const found = this.item.data.find(d => d.port === port);
+    if (found) {
+      console.log(found.port);
+      this.selectedPort = found;
+      console.log(this.selectedPort);
     }
   }
 
