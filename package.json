@@ -18,7 +18,7 @@
     "@expo-google-fonts/jetbrains-mono": "^0.4.1",
     "@react-native-async-storage/async-storage": "2.2.0",
     "@types/leaflet": "^1.9.21",
-    "axios": "^1.13.5",
+    "axios": "^1.15.0",
     "expo": "~54.0.33",
     "expo-camera": "~17.0.10",
     "expo-clipboard": "~8.0.8",
